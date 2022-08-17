@@ -20,5 +20,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Echo.Customers.Core\Echo.Customers.Core.csproj" />
   </ItemGroup>
-
+  
 </Project>
