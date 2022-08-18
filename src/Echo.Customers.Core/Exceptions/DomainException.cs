@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public abstract class DomainException : Exception
     {
         public virtual string Code { get; }

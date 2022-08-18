@@ -24,7 +24,7 @@
         /// <returns>
         ///   <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.
         /// </returns>
-        public bool Equals(ValueObject? other)
+        public virtual bool Equals(ValueObject? other)
         {
             if (other == null || other.GetType() != GetType())
             {

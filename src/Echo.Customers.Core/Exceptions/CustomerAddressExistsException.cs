@@ -7,6 +7,6 @@
     {
         public override string Code { get; } = "customer_address_exists";
 
-        public CustomerAddressExistsException() : base($"Customer address aldready exusts") { }
+        public CustomerAddressExistsException() : base($"Customer address already exists") { }
     }
 }
