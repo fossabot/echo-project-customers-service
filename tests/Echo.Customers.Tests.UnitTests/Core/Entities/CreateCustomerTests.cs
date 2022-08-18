@@ -43,7 +43,6 @@
         public void Given_Empty_Customer_Should_Throw_An_Exception()
         {
             // Arrange
-            CustomerId id = new CustomerId();
             CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
             List<CustomerAddress> addresses = new List<CustomerAddress>
                 {
