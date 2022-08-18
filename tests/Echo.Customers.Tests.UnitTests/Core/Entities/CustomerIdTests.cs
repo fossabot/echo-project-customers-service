@@ -55,7 +55,30 @@
         }
 
         [Fact]
-        public void Given_Empty_Object_Customer_Id_Equal_Should_Return_False()
+        public void To_String_CustomerId_Should_Be_True()
+        {
+            //Arrange 
+            Guid id = Guid.NewGuid();
+
+            //Act
+            CustomerId customerId = new CustomerId(id);
+
+            //Assert
+            customerId.ToString().ShouldBe(id.ToString());
+        }
+
+        [Fact]
+        public void Given_Value_Equal_Should_Return_True()
+        {
+            //Act
+            CustomerId customerId = new CustomerId();
+
+            //Assert
+            customerId.Value.Equals(customerId).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Given_Empty_Object_Value_Equal_Should_Return_False()
         {
             //Act
             CustomerId customerId = new CustomerId();
@@ -66,7 +89,7 @@
 
 
         [Fact]
-        public void Given_Null_Customer_Id_Equal_Should_Return_False()
+        public void Given_Null_Value_Equal_Should_Return_False()
         {
             //Act
             CustomerId customerId = new CustomerId();
@@ -76,24 +99,56 @@
         }
 
         [Fact]
-        public void Given_Customer_Id_Equal_Should_Return_True()
-        {
-            //Act
-            CustomerId customerId = new CustomerId();
-
-            //Assert
-            customerId.Value.Equals(customerId).ShouldBeTrue();
-        }
-
-
-        [Fact]
-        public void Given_Object_Equal_Should_Return_False()
+        public void Given_Object_Value_Equal_Should_Return_False()
         {
             //Act
             CustomerId customerId = new CustomerId();
 
             //Assert
             customerId.Value.Equals("string").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Given_Customer_Id_Equal_Should_Return_True_One()
+        {
+            //Act
+            CustomerId customerId = new CustomerId();
+
+            //Assert
+            customerId.Equals(customerId).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Given_Customer_Id_Equal_Should_Return_True_Two()
+        {
+            //Arrange 
+            Guid id = Guid.NewGuid();
+
+            //Act
+            CustomerId customerId = new CustomerId(id);
+
+            //Assert
+            customerId.Equals(id).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Null_Customer_Id_Equal_Should_Return_False()
+        {
+            //Act
+            CustomerId customerId = new CustomerId();
+
+            //Assert
+            customerId.Equals(null).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Empty_Object_Customer_Id_Equal_Should_Return_False()
+        {
+            //Act
+            CustomerId customerId = new CustomerId();
+
+            //Assert
+            customerId.Equals(new { }).ShouldBeFalse();
         }
     }
 }
