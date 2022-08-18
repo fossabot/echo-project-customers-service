@@ -10,4 +10,4 @@ if [[ "$path" == *scripts ]]; then
     cd "$path" && pwd
 fi
 
-dotnet test
+dotnet test --collect "Code Coverage"
