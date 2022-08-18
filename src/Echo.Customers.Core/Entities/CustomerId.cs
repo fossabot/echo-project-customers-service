@@ -22,7 +22,7 @@
             Value = value;
         }
 
-        public bool Equals(CustomerId? other)
+        public virtual bool Equals(CustomerId? other)
         {
             if (ReferenceEquals(null, other))
             { 
