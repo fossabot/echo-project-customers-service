@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public class InvalidCustomerIdException : DomainException
     {
         public override string Code { get; } = "invalid_customer_id";

@@ -1,5 +1,6 @@
 ﻿namespace Echo.Customers.Core.Exceptions
 {
+    [Serializable]
     public class TooManyPrimaryCustomerAddressException : DomainException
     {
         public override string Code { get; } = "too_many_primary_addresses";

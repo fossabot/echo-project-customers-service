@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public class MissingCustomerAddressException : DomainException
     {
         public override string Code { get; } = "missing_customer_address_list";
