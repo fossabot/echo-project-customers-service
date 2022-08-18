@@ -32,8 +32,8 @@
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(1);
-            customer.CustomerAddresses.Count().ShouldBe(1);
-            customer.CustomerAddresses.First().Equals(address).ShouldBeTrue();
+            customer.Addresses.Count().ShouldBe(1);
+            customer.Addresses.First().Equals(address).ShouldBeTrue();
             customer.Events.Count().ShouldBe(1);
 
             IDomainEvent @event = customer.Events.Single();
@@ -60,8 +60,8 @@
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(0);
-            customer.CustomerAddresses.Count().ShouldBe(1);
-            customer.CustomerAddresses.First().Equals(address).ShouldBeTrue();
+            customer.Addresses.Count().ShouldBe(1);
+            customer.Addresses.First().Equals(address).ShouldBeTrue();
         }
 
         [Fact]
@@ -82,8 +82,8 @@
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(100);
-            customer.CustomerAddresses.Count().ShouldBe(1);
-            customer.CustomerAddresses.First().Equals(address).ShouldBeTrue();
+            customer.Addresses.Count().ShouldBe(1);
+            customer.Addresses.First().Equals(address).ShouldBeTrue();
         }
 
         [Fact]
@@ -137,7 +137,7 @@
         {
             // Arrange
             CustomerId id = new CustomerId();
-           
+
             List<CustomerAddress> addresses = new List<CustomerAddress>
                 {
                     new CustomerAddress("Country1", "City1", 1, "address1", true),

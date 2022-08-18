@@ -15,15 +15,15 @@
         /// <summary>
         /// The customer addresses
         /// </summary>
-        private IEnumerable<CustomerAddress> _customerAddresses;
+        private IList<CustomerAddress> _addresses;
 
         /// <summary>
         /// Gets the customer addresses.
         /// </summary>
-        public IEnumerable<CustomerAddress> CustomerAddresses
+        public IEnumerable<CustomerAddress> Addresses
         {
-            get => _customerAddresses;
-            private set => _customerAddresses = new List<CustomerAddress>(value);
+            get => _addresses;
+            private set => _addresses = new List<CustomerAddress>(value);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@
             : base(id, 0)
         {
             ValidateAdresses(customerAddresses);
-            CustomerAddresses = customerAddresses;
+            Addresses = customerAddresses;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@
             : base(id, version)
         {
             ValidateAdresses(customerAddresses);
-            CustomerAddresses = customerAddresses;
+            Addresses = customerAddresses;
         }
 
         public static Customer Create(Guid id, IEnumerable<CustomerAddress> customerAddresses)
@@ -56,6 +56,26 @@
             var customer = new Customer(id, customerAddresses);
             customer.AddEvent(new CustomerCreated(customer));
             return customer;
+        }
+
+        /// <summary>
+        /// Adds the address.
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <exception cref="Echo.Customers.Core.Exceptions.InvalidCustomerAddressException"></exception>
+        /// <exception cref="Echo.Customers.Core.Exceptions.TooManyPrimaryCustomerAddressException"></exception>
+        public void AddAddress(CustomerAddress address)
+        {
+            if (address is null)
+            {
+                throw new InvalidCustomerAddressException();
+            }
+            else if (address.IsPrimary && Addresses.Count(x => x.IsPrimary) == 1)
+            {
+                throw new TooManyPrimaryCustomerAddressException();
+            }
+
+            _addresses.Add(address);
         }
 
         /// <summary>

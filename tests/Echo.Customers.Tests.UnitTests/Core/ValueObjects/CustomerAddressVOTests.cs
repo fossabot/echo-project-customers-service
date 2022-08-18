@@ -14,7 +14,7 @@
 
     using Xunit;
 
-    public class CreateCustomerAddressTests
+    public class CustomerAddressVOTests
     {
         // Arrange
         private readonly string country = "Country";
