@@ -26,10 +26,10 @@
         public void Given_Valid_Values_Customer_Info_Should_Be_Created()
         {
             // Act
-            CustomerAddress customerInfo = new CustomerAddress(country, city, postCode, address);
-            
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
+
             // Assert
-            customerInfo.ShouldNotBeNull();
+            customerAddress.ShouldNotBeNull();
         }
 
         [Fact]
@@ -81,44 +81,84 @@
         public void Given_Identicle_Customer_Address_Equal_Should_Return_True()
         {
             // Act
-            CustomerAddress customerInfo1 = new CustomerAddress(country, city, postCode, address);
-            CustomerAddress customerInfo2 = new CustomerAddress(country, city, postCode, address);
+            CustomerAddress customerAddress1 = new CustomerAddress(country, city, postCode, address);
+            CustomerAddress customerAddress2 = new CustomerAddress(country, city, postCode, address);
 
             // Assert
-            customerInfo1.Equals(customerInfo2).ShouldBeTrue();
+            customerAddress1.Equals(customerAddress2).ShouldBeTrue();
         }
 
         [Fact]
         public void Given_DIfferent_Customer_Address_Equal_Should_Return_False()
         {
             // Act
-            CustomerAddress customerInfo1 = new CustomerAddress(country + " 1", city, postCode, address);
-            CustomerAddress customerInfo2 = new CustomerAddress(country, city + " 2", postCode, address);
+            CustomerAddress customerAddress1 = new CustomerAddress(country + " 1", city, postCode, address);
+            CustomerAddress customerAddress2 = new CustomerAddress(country, city + " 2", postCode, address);
 
             // Assert
-            customerInfo1.Equals(customerInfo2).ShouldBeFalse();
+            customerAddress1.Equals(customerAddress2).ShouldBeFalse();
         }
 
         [Fact]
         public void Given_Null_Customer_Address_Equal_Should_Return_False()
         {
             // Act
-            CustomerAddress customerInfo = new CustomerAddress(country, city, postCode, address);
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
 
             // Assert
-            customerInfo.Equals(null).ShouldBeFalse();
+            customerAddress.Equals((CustomerAddress)null).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Given_Empty_Object_Customer_Address_Equal_Should_Return_False()
+        {
+            // Act
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
+
+            // Assert
+            customerAddress.Equals(new { }).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Given_Object_Customer_Address_Equal_Should_Return_True()
+        {
+            // Act
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
+
+            // Assert
+            customerAddress.Equals((object)customerAddress).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Given_Null_Object_Customer_Address_Equal_Should_Return_False()
+        {
+            // Act
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
+
+            // Assert
+            customerAddress.Equals((object)null).ShouldBeFalse();
         }
 
         [Fact]
         public void To_String_Should_Return_Expected_String()
         {
             // Act
-            CustomerAddress customerInfo = new CustomerAddress(country, city, postCode, address);
-            string customerInfoAsString = customerInfo.ToString();
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
+            string customerAddressAsString = customerAddress.ToString();
 
             // Assert
-            customerInfoAsString.ShouldNotBeNullOrEmpty();
-            customerInfoAsString.ShouldNotBeSameAs($"{address}, {country}, {postCode} {city}");
+            customerAddressAsString.ShouldNotBeNullOrEmpty();
+            customerAddressAsString.ShouldNotBeSameAs($"{address}, {country}, {postCode} {city}");
+        }
+
+        [Fact]
+        public void Hash_Customer_Address_Should_Be_Created()
+        {
+            //Act
+            CustomerAddress customerAddress = new CustomerAddress(country, city, postCode, address);
+
+            //Assert
+            customerAddress.GetHashCode().ShouldNotBe(0);
         }
     }
 }

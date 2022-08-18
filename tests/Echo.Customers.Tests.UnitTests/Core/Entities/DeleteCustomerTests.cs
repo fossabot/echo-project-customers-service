@@ -14,27 +14,52 @@
     public class DeleteCustomerTests
     {
         [Fact]
-        public void Given_Valid_Values_Customer_Should_Be_Deleted()
+        public void Customer_Should_Be_Deleted()
         {
             // Arrange
             CustomerId id = new CustomerId();
             List<CustomerAddress> addresses = new List<CustomerAddress>
-                { 
+                {
                     new CustomerAddress("Country", "City", 12345, "address")
                 };
 
-            Customer resource = Customer.Create(id, addresses);
+            Customer customer = Customer.Create(id, addresses);
 
             // Act
-            resource.Delete();
+            customer.Delete();
 
             // Assert
-            resource.ShouldNotBeNull();
-            resource.Id.ShouldBe(id);
-            resource.Events.Count().ShouldBe(2);
+            customer.ShouldNotBeNull();
+            customer.Id.ShouldBe(id);
+            customer.Events.Count().ShouldBe(2);
 
-            var @event = resource.Events.Last();
+            var @event = customer.Events.Last();
             @event.ShouldBeOfType<CustomerDeleted>();
+            ((CustomerDeleted)@event).Customer.ShouldNotBeNull();
+            ((CustomerDeleted)@event).Customer.Equals(customer).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Events_Should_Be_Deleted()
+        {
+            // Arrange
+            CustomerId id = new CustomerId();
+            List<CustomerAddress> addresses = new List<CustomerAddress>
+                {
+                    new CustomerAddress("Country", "City", 12345, "address")
+                };
+
+            Customer customer = Customer.Create(id, addresses);
+
+            // Act
+            customer.Delete();
+
+            // Assert
+            customer.ShouldNotBeNull();
+            customer.Id.ShouldBe(id);
+            customer.Events.Count().ShouldBe(2);
+            customer.ClearEvents();
+            customer.Events.Count().ShouldBe(0);
         }
     }
 }

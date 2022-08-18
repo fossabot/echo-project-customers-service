@@ -8,9 +8,7 @@
     {
         public Guid Value { get; }
 
-        public CustomerId() : this(Guid.NewGuid())
-        {
-        }
+        public CustomerId() : this(Guid.NewGuid()) { }
 
         public CustomerId(Guid value)
         {
@@ -25,8 +23,8 @@
         public virtual bool Equals(CustomerId? other)
         {
             if (ReferenceEquals(null, other))
-            { 
-                return false; 
+            {
+                return false;
             }
 
             return ReferenceEquals(this, other) || Value.Equals(other.Value);
@@ -35,8 +33,8 @@
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
-            { 
-                return false; 
+            {
+                return false;
             }
 
             if (ReferenceEquals(this, obj))

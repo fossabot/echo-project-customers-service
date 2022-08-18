@@ -42,7 +42,7 @@
         }
 
         [Fact]
-        public void hash_CustomerId_Should_Be_Created()
+        public void Hash_CustomerId_Should_Be_Created()
         {
             //Arrange 
             Guid id = Guid.NewGuid();

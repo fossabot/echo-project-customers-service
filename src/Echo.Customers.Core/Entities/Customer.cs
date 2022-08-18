@@ -35,7 +35,7 @@
             : base(id, 0)
         {
             ValidateAdresses(customerAddresses);
-            _customerAddresses = customerAddresses;
+            CustomerAddresses = customerAddresses;
         }
 
         /// <summary>
@@ -44,11 +44,11 @@
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddresses">The customer addresses.</param>
         /// <param name="version">The version.</param>
-        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses, int version) 
+        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses, int version)
             : base(id, version)
         {
             ValidateAdresses(customerAddresses);
-            _customerAddresses = customerAddresses;
+            CustomerAddresses = customerAddresses;
         }
 
         public static Customer Create(Guid id, IEnumerable<CustomerAddress> customerAddresses)
@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// Validates the adresses.
+        /// Validates the addresses.
         /// </summary>
         /// <param name="customerAddresses">The customer addresses.</param>
         /// <exception cref="MissingCustomerAddressException"></exception>
@@ -79,7 +79,7 @@
             {
                 throw new MissingCustomerAddressException();
             }
-            else if (customerAddresses.Any( x=> x is null))
+            else if (customerAddresses.Any(x => x is null))
             {
                 throw new InvalidCustomerAddressException();
             }
