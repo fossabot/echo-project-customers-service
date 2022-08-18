@@ -31,8 +31,20 @@
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddresses">The customer addresses.</param>
+        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses)
+            : base(id, 0)
+        {
+            ValidateAdresses(customerAddresses);
+            _customerAddresses = customerAddresses;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Customer"/> class.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="customerAddresses">The customer addresses.</param>
         /// <param name="version">The version.</param>
-        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses, int version = 0) 
+        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses, int version) 
             : base(id, version)
         {
             ValidateAdresses(customerAddresses);

@@ -46,7 +46,25 @@
         /// <param name="postCode">The post code.</param>
         /// <param name="address">The address.</param>
         /// <exception cref="InvalidCustomerAddressException"></exception>
-        public CustomerAddress(string country, string city, int postCode, string address, bool isPrimary = false)
+        public CustomerAddress(string country, string city, int postCode, string address)
+        {
+            Country = country ?? throw new InvalidCustomerAddressException(nameof(Country));
+            City = city ?? throw new InvalidCustomerAddressException(nameof(City));
+            PostCode = postCode <= 0 ? throw new InvalidCustomerAddressException(nameof(PostCode)) : postCode;
+            Address = address ?? throw new InvalidCustomerAddressException(nameof(Address));
+            IsPrimary = false;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomerAddress"/> class.
+        /// </summary>
+        /// <param name="country">The country.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="postCode">The post code.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="isPrimary">If address is primary.</param>
+        /// <exception cref="InvalidCustomerAddressException"></exception>
+        public CustomerAddress(string country, string city, int postCode, string address, bool isPrimary)
         {
             Country = country ?? throw new InvalidCustomerAddressException(nameof(Country));
             City = city ?? throw new InvalidCustomerAddressException(nameof(City));
