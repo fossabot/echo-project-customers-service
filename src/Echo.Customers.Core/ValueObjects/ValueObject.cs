@@ -8,11 +8,6 @@
     public abstract class ValueObject : IEquatable<ValueObject>
     {
         /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        public Guid Id { get; init; }
-
-        /// <summary>
         /// Gets the equality components.
         /// </summary>
         protected abstract IEnumerable<object> GetEqualityComponents();

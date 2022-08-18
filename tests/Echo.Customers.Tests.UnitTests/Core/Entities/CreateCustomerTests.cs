@@ -15,7 +15,7 @@
     public class CreateCustomerTests
     {
         [Fact]
-        public void Given_Valid_Values_Customer_Should_Be_Created()
+        public void Given_Valid_Values_Customer_Should_Be_Created_Static_Factory()
         {
             // Arrange
             CustomerId id = new CustomerId();
@@ -26,17 +26,64 @@
                 };
 
             // Act
-            Customer resource = Customer.Create(id, addresses);
+            Customer customer = Customer.Create(id, addresses);
 
             // Assert
-            resource.ShouldNotBeNull();
-            resource.Id.ShouldBe(id);
-            resource.CustomerAddresses.Count().ShouldBe(1);
-            resource.CustomerAddresses.First().Equals(address).ShouldBeTrue();
-            resource.Events.Count().ShouldBe(1);
+            customer.ShouldNotBeNull();
+            customer.Id.ShouldBe(id);
+            customer.Version.ShouldBe(1);
+            customer.CustomerAddresses.Count().ShouldBe(1);
+            customer.CustomerAddresses.First().Equals(address).ShouldBeTrue();
+            customer.Events.Count().ShouldBe(1);
 
-            IDomainEvent @event = resource.Events.Single();
+            IDomainEvent @event = customer.Events.Single();
             @event.ShouldBeOfType<CustomerCreated>();
+            ((CustomerCreated)@event).Customer.ShouldNotBeNull();
+            ((CustomerCreated)@event).Customer.Equals(customer).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_One()
+        {
+            // Arrange
+            CustomerId id = new CustomerId();
+            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
+            List<CustomerAddress> addresses = new List<CustomerAddress>
+                {
+                    address
+                };
+
+            // Act
+            Customer customer = new Customer(id, addresses);
+
+            // Assert
+            customer.ShouldNotBeNull();
+            customer.Id.ShouldBe(id);
+            customer.Version.ShouldBe(0);
+            customer.CustomerAddresses.Count().ShouldBe(1);
+            customer.CustomerAddresses.First().Equals(address).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_Two()
+        {
+            // Arrange
+            CustomerId id = new CustomerId();
+            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
+            List<CustomerAddress> addresses = new List<CustomerAddress>
+                {
+                    address
+                };
+
+            // Act
+            Customer customer = new Customer(id, addresses, 100);
+
+            // Assert
+            customer.ShouldNotBeNull();
+            customer.Id.ShouldBe(id);
+            customer.Version.ShouldBe(100);
+            customer.CustomerAddresses.Count().ShouldBe(1);
+            customer.CustomerAddresses.First().Equals(address).ShouldBeTrue();
         }
 
         [Fact]

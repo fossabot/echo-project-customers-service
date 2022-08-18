@@ -1,6 +1,8 @@
 ﻿namespace Echo.Customers.Tests.UnitTests.Core.ValueObjects
 {
+    using System.Diagnostics.Metrics;
     using System.Linq;
+    using System.Net;
 
     using Echo.Customers.Core.Contracts;
     using Echo.Customers.Core.Entities;
@@ -87,7 +89,7 @@
         }
 
         [Fact]
-        public void Given_DIfferent_Customer_Info_Equal_Should_Return_False()
+        public void Given_DIfferent_Customer_Address_Equal_Should_Return_False()
         {
             // Act
             CustomerAddress customerInfo1 = new CustomerAddress(country + " 1", city, postCode, address);
@@ -98,13 +100,25 @@
         }
 
         [Fact]
-        public void Given_Null_Customer_Info_Equal_Should_Return_False()
+        public void Given_Null_Customer_Address_Equal_Should_Return_False()
         {
             // Act
             CustomerAddress customerInfo = new CustomerAddress(country, city, postCode, address);
 
             // Assert
             customerInfo.Equals(null).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void To_String_Should_Return_Expected_String()
+        {
+            // Act
+            CustomerAddress customerInfo = new CustomerAddress(country, city, postCode, address);
+            string customerInfoAsString = customerInfo.ToString();
+
+            // Assert
+            customerInfoAsString.ShouldNotBeNullOrEmpty();
+            customerInfoAsString.ShouldNotBeSameAs($"{address}, {country}, {postCode} {city}");
         }
     }
 }
