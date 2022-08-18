@@ -1,8 +1,8 @@
 ﻿namespace Echo.Customers.Core.Exceptions
 {
     using System;
+    using System.Runtime.Serialization;
 
-    [Serializable]
     public abstract class DomainException : Exception
     {
         public virtual string Code { get; }
@@ -13,6 +13,12 @@
             {
                 this.Code = "core_exception";
             }
+        }
+
+        protected DomainException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+
         }
     }
 }
