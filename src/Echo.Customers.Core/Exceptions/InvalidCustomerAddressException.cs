@@ -16,6 +16,16 @@
             => (Code, Name) = ("invalid_customer_info", name);
 
         protected InvalidCustomerAddressException(SerializationInfo info, StreamingContext context) : base(info, context)
-            => (Code, Name) = ("invalid_customer_info", string.Empty);
+        {
+            Code = info.GetString(nameof(Code)) ?? "invalid_customer_info";
+            Name = info.GetString(nameof(Name)) ?? "missing_prop_name";
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(Code), Code);
+            info.AddValue(nameof(Name), Name);
+            base.GetObjectData(info, context);
+        }
     }
 }
