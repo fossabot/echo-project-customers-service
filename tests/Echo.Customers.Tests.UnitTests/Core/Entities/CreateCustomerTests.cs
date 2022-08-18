@@ -25,8 +25,6 @@
                     address
                 };
 
-
-
             // Act
             Customer resource = Customer.Create(id, addresses);
 
@@ -68,20 +66,6 @@
 
             // Act
             Exception exception = Record.Exception(() => Customer.Create(id, null));
-
-            // Assert
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<MissingCustomerAddressException>();
-        }
-
-        [Fact]
-        public void Given_Empty_Customer_Address_List_Should_Throw_An_Exception()
-        {
-            // Arrange
-            CustomerId id = new CustomerId();
-
-            // Act
-            Exception exception = Record.Exception(() => Customer.Create(id, new List<CustomerAddress>()));
 
             // Assert
             exception.ShouldNotBeNull();
