@@ -1,9 +1,11 @@
 ﻿namespace Echo.Customers.Core.ValueObjects
 {
+    using Echo.Customers.Core.Entities;
+
     /// <summary>
     /// Value Objects base class
     /// </summary>
-    public abstract class ValueObject
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -16,22 +18,44 @@
         protected abstract IEnumerable<object> GetEqualityComponents();
 
         /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        ///   <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.
+        /// </returns>
+        public bool Equals(ValueObject? other)
+        {
+            if (other == null || other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+        }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
         /// </summary>
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
         /// <returns>
         ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if (ReferenceEquals(null, obj))
             {
                 return false;
             }
 
-            ValueObject other = (ValueObject)obj;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-            return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+            return obj.GetType() == this.GetType() && this.Equals((ValueObject)obj);
+
+            
         }
 
         /// <summary>
@@ -53,7 +77,7 @@
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static bool operator ==(ValueObject left, ValueObject right)
+        public static bool operator == (ValueObject left, ValueObject right)
             => left.Equals(right);
 
         /// <summary>
@@ -64,7 +88,7 @@
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static bool operator !=(ValueObject left, ValueObject right)
+        public static bool operator != (ValueObject left, ValueObject right)
             => !left.Equals(right);
 
     }

@@ -16,7 +16,7 @@
 
         public IEnumerable<IDomainEvent> Events => _events;
 
-        public CustomerRoot(Guid id, int version)
+        protected CustomerRoot(Guid id, int version)
         {
             this.Id = id;
             this.Version = version;

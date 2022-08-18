@@ -15,7 +15,7 @@
         /// <summary>
         /// The customer addresses
         /// </summary>
-        public IEnumerable<CustomerAddress> _customerAddresses = new List<CustomerAddress>();
+        private IEnumerable<CustomerAddress> _customerAddresses;
 
         /// <summary>
         /// Gets the customer addresses.
@@ -63,7 +63,7 @@
         /// <exception cref="TooManyPrimaryCustomerAddressException"></exception>
         private static void ValidateAdresses(IEnumerable<CustomerAddress> customerAddresses)
         {
-            if (customerAddresses is null || !customerAddresses.Any())
+            if (customerAddresses is null)
             {
                 throw new MissingCustomerAddressException();
             }
@@ -71,7 +71,7 @@
             {
                 throw new InvalidCustomerAddressException();
             }
-            else if (customerAddresses.Where(x => x.IsPrimary).Count() > 1)
+            else if (customerAddresses.Count(x => x.IsPrimary) > 1)
             {
                 throw new TooManyPrimaryCustomerAddressException();
             }

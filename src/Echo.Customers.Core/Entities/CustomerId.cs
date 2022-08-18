@@ -4,7 +4,7 @@
 
     using Echo.Customers.Core.Exceptions;
 
-    public class CustomerId
+    public class CustomerId : IEquatable<CustomerId>
     {
         public Guid Value { get; }
 
@@ -22,16 +22,28 @@
             Value = value;
         }
 
-        public bool Equals(CustomerId other)
+        public bool Equals(CustomerId? other)
         {
-            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(null, other))
+            { 
+                return false; 
+            }
+
             return ReferenceEquals(this, other) || Value.Equals(other.Value);
         }
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj))
+            { 
+                return false; 
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
             return obj.GetType() == this.GetType() && this.Equals((CustomerId)obj);
         }
 
