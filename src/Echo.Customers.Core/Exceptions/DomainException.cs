@@ -2,6 +2,7 @@
 {
     using System;
     using System.Runtime.Serialization;
+    using System.Xml.Linq;
 
     public abstract class DomainException : Exception
     {
@@ -15,10 +16,7 @@
             }
         }
 
-        protected DomainException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-
-        }
+        protected DomainException(SerializationInfo info, StreamingContext context) : base(info, context) 
+            => Code = "core_exception";
     }
 }

@@ -12,7 +12,7 @@
 
     using Xunit;
 
-    public class CreateCustomerInfoTests
+    public class CreateCustomerTests
     {
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created()

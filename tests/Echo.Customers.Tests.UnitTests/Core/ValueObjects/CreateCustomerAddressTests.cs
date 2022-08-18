@@ -87,7 +87,7 @@
         }
 
         [Fact]
-        public void Given_DIfferent_Customer_Info_Equal_Should_Return_True()
+        public void Given_DIfferent_Customer_Info_Equal_Should_Return_False()
         {
             // Act
             CustomerAddress customerInfo1 = new CustomerAddress(country + " 1", city, postCode, address);
@@ -95,6 +95,16 @@
 
             // Assert
             customerInfo1.Equals(customerInfo2).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Given_Null_Customer_Info_Equal_Should_Return_False()
+        {
+            // Act
+            CustomerAddress customerInfo = new CustomerAddress(country, city, postCode, address);
+
+            // Assert
+            customerInfo.Equals(null).ShouldBeFalse();
         }
     }
 }
