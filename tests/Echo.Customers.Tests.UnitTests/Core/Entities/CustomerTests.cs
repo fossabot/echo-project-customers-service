@@ -17,6 +17,17 @@
         private static readonly DateTime lastUpdate = DateTime.UtcNow;
         private static readonly Customer customer = Customer.Create(id, details, address);
 
+
+        [Fact]
+        public void Clear_Events_Should_Be_Clear_List()
+        {
+            //Act
+            customer.ClearEvents();
+
+            //Assert
+            customer.Events.Count().ShouldBe(0);
+        }
+
         [Fact]
         public void Hash_Customer_Should_Be_Created()
         {
