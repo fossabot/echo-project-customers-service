@@ -20,20 +20,15 @@
             // Arrange
             CustomerId id = new CustomerId();
             CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    address
-                };
 
             // Act
-            Customer customer = Customer.Create(id, addresses);
+            Customer customer = Customer.Create(id, address);
 
             // Assert
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(1);
-            customer.Addresses.Count().ShouldBe(1);
-            customer.Addresses.First().Equals(address).ShouldBeTrue();
+            customer.Address.Equals(address).ShouldBeTrue();
             customer.Events.Count().ShouldBe(1);
 
             IDomainEvent @event = customer.Events.Single();
@@ -48,20 +43,15 @@
             // Arrange
             CustomerId id = new CustomerId();
             CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    address
-                };
 
             // Act
-            Customer customer = new Customer(id, addresses);
+            Customer customer = new Customer(id, address);
 
             // Assert
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(0);
-            customer.Addresses.Count().ShouldBe(1);
-            customer.Addresses.First().Equals(address).ShouldBeTrue();
+            customer.Address.Equals(address).ShouldBeTrue();
         }
 
         [Fact]
@@ -70,20 +60,15 @@
             // Arrange
             CustomerId id = new CustomerId();
             CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    address
-                };
 
             // Act
-            Customer customer = new Customer(id, addresses, 100);
+            Customer customer = new Customer(id, address, 100);
 
             // Assert
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(100);
-            customer.Addresses.Count().ShouldBe(1);
-            customer.Addresses.First().Equals(address).ShouldBeTrue();
+            customer.Address.Equals(address).ShouldBeTrue();
         }
 
         [Fact]
@@ -91,13 +76,9 @@
         {
             // Arrange
             CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    address
-                };
 
             // Act
-            Exception exception = Record.Exception(() => Customer.Create(Guid.Empty, addresses));
+            Exception exception = Record.Exception(() => Customer.Create(Guid.Empty, address));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -116,40 +97,6 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<MissingCustomerAddressException>();
-        }
-
-        [Fact]
-        public void Given_Null_Customer_Address_In_List_Should_Throw_An_Exception()
-        {
-            // Arrange
-            CustomerId id = new CustomerId();
-
-            // Act
-            Exception exception = Record.Exception(() => Customer.Create(id, new List<CustomerAddress> { null }));
-
-            // Assert
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<InvalidCustomerAddressException>();
-        }
-
-        [Fact]
-        public void Given_More_Then_One_Primary_Customer_Address_In_List_Should_Throw_An_Exception()
-        {
-            // Arrange
-            CustomerId id = new CustomerId();
-
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    new CustomerAddress("Country1", "City1", 1, "address1", true),
-                    new CustomerAddress("Country2", "City2", 2, "address2", true)
-                };
-
-            // Act
-            Exception exception = Record.Exception(() => Customer.Create(id, addresses));
-
-            // Assert
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<TooManyPrimaryCustomerAddressException>();
         }
     }
 }

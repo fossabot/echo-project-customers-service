@@ -15,27 +15,27 @@
         /// <summary>
         /// The customer addresses
         /// </summary>
-        private IList<CustomerAddress> _addresses;
+        private CustomerAddress _address;
 
         /// <summary>
         /// Gets the customer addresses.
         /// </summary>
-        public IEnumerable<CustomerAddress> Addresses
+        public CustomerAddress Address
         {
-            get => _addresses;
-            private set => _addresses = new List<CustomerAddress>(value);
+            get => _address;
+            private set => _address = value;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Customer"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="customerAddresses">The customer addresses.</param>
-        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses)
+        /// <param name="customerAddresses">The customer address.</param>
+        public Customer(Guid id, CustomerAddress customerAddress)
             : base(id, 0)
         {
-            ValidateAdresses(customerAddresses);
-            Addresses = customerAddresses;
+            ValidateAdresses(customerAddress);
+            Address = customerAddress;
         }
 
         /// <summary>
@@ -44,38 +44,18 @@
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddresses">The customer addresses.</param>
         /// <param name="version">The version.</param>
-        public Customer(Guid id, IEnumerable<CustomerAddress> customerAddresses, int version)
+        public Customer(Guid id, CustomerAddress customerAddress, int version)
             : base(id, version)
         {
-            ValidateAdresses(customerAddresses);
-            Addresses = customerAddresses;
+            ValidateAdresses(customerAddress);
+            Address = customerAddress;
         }
 
-        public static Customer Create(Guid id, IEnumerable<CustomerAddress> customerAddresses)
+        public static Customer Create(Guid id, CustomerAddress customerAddress)
         {
-            var customer = new Customer(id, customerAddresses);
+            var customer = new Customer(id, customerAddress);
             customer.AddEvent(new CustomerCreated(customer));
             return customer;
-        }
-
-        /// <summary>
-        /// Adds the address.
-        /// </summary>
-        /// <param name="address">The address.</param>
-        /// <exception cref="Echo.Customers.Core.Exceptions.InvalidCustomerAddressException"></exception>
-        /// <exception cref="Echo.Customers.Core.Exceptions.TooManyPrimaryCustomerAddressException"></exception>
-        public void AddAddress(CustomerAddress address)
-        {
-            if (address is null)
-            {
-                throw new InvalidCustomerAddressException();
-            }
-            else if (address.IsPrimary && Addresses.Count(x => x.IsPrimary) == 1)
-            {
-                throw new TooManyPrimaryCustomerAddressException();
-            }
-
-            _addresses.Add(address);
         }
 
         /// <summary>
@@ -91,21 +71,11 @@
         /// </summary>
         /// <param name="customerAddresses">The customer addresses.</param>
         /// <exception cref="MissingCustomerAddressException"></exception>
-        /// <exception cref="InvalidCustomerAddressException"></exception>
-        /// <exception cref="TooManyPrimaryCustomerAddressException"></exception>
-        private static void ValidateAdresses(IEnumerable<CustomerAddress> customerAddresses)
+        private static void ValidateAdresses(CustomerAddress customerAddress)
         {
-            if (customerAddresses is null)
+            if (customerAddress is null)
             {
                 throw new MissingCustomerAddressException();
-            }
-            else if (customerAddresses.Any(x => x is null))
-            {
-                throw new InvalidCustomerAddressException();
-            }
-            else if (customerAddresses.Count(x => x.IsPrimary) > 1)
-            {
-                throw new TooManyPrimaryCustomerAddressException();
             }
         }
     }
