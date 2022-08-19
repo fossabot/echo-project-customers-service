@@ -12,9 +12,7 @@
             => Code = "missing_customer_details";
 
         protected MissingCustomerDetailsException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-            Code = info.GetString("Code") ?? "missing_customer_details";
-        }
+            => Code = info.GetString("Code") ?? "missing_customer_details";
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {

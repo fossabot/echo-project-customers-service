@@ -15,10 +15,7 @@
             => (Code, Id) = ("invalid_customer_id", id);
 
         protected InvalidCustomerIdException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-            Code = info.GetString(nameof(Code)) ?? "invalid_customer_id";
-            Id = Guid.Parse(info.GetString(nameof(Id)) ?? Guid.Empty.ToString());
-        }
+            => (Code, Id) = (info.GetString(nameof(Code)) ?? "invalid_customer_id", Guid.Parse(info.GetString(nameof(Id)) ?? Guid.Empty.ToString()));
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
