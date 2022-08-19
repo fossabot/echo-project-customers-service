@@ -2,6 +2,7 @@
 {
     using Echo.Customers.Core.Contracts;
     using Echo.Customers.Core.Entities;
+    using Echo.Customers.Core.Enums;
     using Echo.Customers.Core.Events;
     using Echo.Customers.Core.Exceptions;
 
@@ -24,6 +25,7 @@
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(1);
+            customer.State.ShouldBe(CustomerState.Inclomplate);
             customer.Details.Equals(details).ShouldBeTrue();
             customer.Address.Equals(address).ShouldBeTrue();
             customer.Events.Count().ShouldBe(1);

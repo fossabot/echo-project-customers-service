@@ -1,7 +1,7 @@
 ﻿namespace Echo.Customers.Core.Entities
 {
     using Echo.Customers.Core.Contracts;
-    using Echo.Customers.Core.Exceptions;
+    using Echo.Customers.Core.Enums;
 
     /// <summary>
     /// Customer Base class
@@ -27,6 +27,11 @@
         public int Version { get; protected set; }
 
         /// <summary>
+        /// Gets or sets the state.
+        /// </summary>
+        public CustomerState State { get; protected set; }
+
+        /// <summary>
         /// Gets the Customer events.
         /// </summary>
         public IEnumerable<IDomainEvent> Events => _events;
@@ -45,23 +50,11 @@
         /// Initializes a new instance of the <see cref="CustomerBase"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="version">The version.</param>
-        protected CustomerBase(Guid id, int version)
-        {
-            this.Id = id;
-            this.Version = version;
-            this.CreateOn = DateTime.UtcNow;
-            this.LastUpdate = DateTime.UtcNow;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomerBase"/> class.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
         protected CustomerBase(Guid id)
         {
             this.Id = id;
             this.Version = 0;
+            this.State = CustomerState.Inclomplate;
             this.CreateOn = DateTime.UtcNow;
             this.LastUpdate = DateTime.UtcNow;
         }
@@ -73,12 +66,13 @@
         /// <param name="version">The version.</param>
         /// <param name="createOn">The create on.</param>
         /// <param name="lastUpdate">The last update.</param>
-        protected CustomerBase(Guid id, int version, DateTime createOn, DateTime lastUpdate)
+        protected CustomerBase(Guid id, int version, CustomerState state, DateTime createOn, DateTime lastUpdate)
         {
             this.Id = id;
             this.Version = version;
-            this.CreateOn = DateTime.UtcNow;
-            this.LastUpdate = DateTime.UtcNow;
+            this.State = state;
+            this.CreateOn = createOn;
+            this.LastUpdate = lastUpdate;
         }
 
         /// <summary>
@@ -94,7 +88,6 @@
 
             _events.Add(@event);
         }
-
 
         /// <summary>
         /// Clears the events.

@@ -10,6 +10,8 @@
 
         public string Tenant { get; set; }
 
+        public Guid Owner { get; set; }
+
         public CustomerDetails(string name, string tenant)
         {
             Name = name ?? throw new InvalidCustomerDetailsException(nameof(Name));
@@ -20,6 +22,7 @@
         {
             yield return Name;
             yield return Tenant;
+            yield return Owner;
         }
     }
 }

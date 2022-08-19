@@ -17,12 +17,11 @@
         public void Customer_Should_Be_Deleted()
         {
             // Act
+            customer.ClearEvents();
             customer.Delete();
 
             // Assert
-            customer.ShouldNotBeNull();
-            customer.Id.ShouldBe(id);
-            customer.Events.Count().ShouldBe(2);
+            customer.Events.Count().ShouldBe(1);
 
             var @event = customer.Events.Last();
             @event.ShouldBeOfType<CustomerDeleted>();

@@ -1,5 +1,6 @@
 ﻿namespace Echo.Customers.Core.Entities
 {
+    using Echo.Customers.Core.Enums;
     using Echo.Customers.Core.Events;
     using Echo.Customers.Core.Exceptions;
     using Echo.Customers.Core.ValueObjects;
@@ -44,7 +45,7 @@
         /// Initializes a new instance of the <see cref="Customer"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="customerAddresses">The customer address.</param>
+        /// <param name="customerAddress">The customer address.</param>
         public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress)
             : base(id)
         {
@@ -52,19 +53,18 @@
             Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Customer"/> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="Customer" /> class.</summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="customerAddresses">The customer addresses.</param>
+        /// <param name="details"></param>
+        /// <param name="customerAddress">The customer address.</param>
         /// <param name="version">The version.</param>
-        public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress, int version, DateTime createOn, DateTime lastUpdate)
-            : base(id, version)
+        /// <param name="createOn"></param>
+        /// <param name="lastUpdate"></param>
+        public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress, int version, CustomerState state, DateTime createOn, DateTime lastUpdate)
+            : base(id, version, state, createOn, lastUpdate)
         {
             Details = details ?? throw new MissingCustomerDetailsException();
             Address = customerAddress ?? throw new MissingCustomerAddressException();
-            CreateOn = createOn;
-            LastUpdate = lastUpdate;
         }
 
         public static Customer Create(Guid id, CustomerDetails details, CustomerAddress customerAddress)
@@ -138,6 +138,8 @@
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
         /// </returns>
         public override int GetHashCode()
-            => GetEqualityComponents().Select(x => x != null ? x.GetHashCode() : 0).Aggregate((x, y) => x ^ y);
+            => GetEqualityComponents()
+                .Select(x => x != null ? x.GetHashCode() : 0)
+                .Aggregate((x, y) => x ^ y);
     }
 }
