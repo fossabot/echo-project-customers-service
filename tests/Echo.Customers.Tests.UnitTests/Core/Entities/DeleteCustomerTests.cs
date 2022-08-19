@@ -18,12 +18,9 @@
         {
             // Arrange
             CustomerId id = new CustomerId();
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    new CustomerAddress("Country", "City", 12345, "address")
-                };
+            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
 
-            Customer customer = Customer.Create(id, addresses);
+            Customer customer = Customer.Create(id, address);
 
             // Act
             customer.Delete();
@@ -44,12 +41,10 @@
         {
             // Arrange
             CustomerId id = new CustomerId();
-            List<CustomerAddress> addresses = new List<CustomerAddress>
-                {
-                    new CustomerAddress("Country", "City", 12345, "address")
-                };
+            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
 
-            Customer customer = Customer.Create(id, addresses);
+
+            Customer customer = Customer.Create(id, address);
 
             // Act
             customer.Delete();
