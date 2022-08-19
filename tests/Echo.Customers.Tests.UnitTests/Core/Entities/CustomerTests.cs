@@ -2,6 +2,7 @@
 {
     using Echo.Customers.Core.Entities;
     using Echo.Customers.Core.Enums;
+    using Echo.Customers.Core.Events;
     using Echo.Customers.Core.ValueObjects;
 
     using Shouldly;
@@ -40,50 +41,73 @@
         public void SetIncomplete_Should_Be_Change_State()
         {
             //Act
+            customer.ClearEvents();
             customer.SetIncomplete();
 
             //Assert
             customer.State.ShouldBe(CustomerState.Incomplete);
+            customer.Events.Count(x => x.GetType() == typeof(CustomerStateChanged)).ShouldBe(1);
         }
 
         [Fact]
         public void Activate_Should_Be_Change_State()
         {
             //Act
+            customer.ClearEvents();
             customer.Activate();
 
             //Assert
             customer.State.ShouldBe(CustomerState.Active);
+            customer.Events.Count(x => x.GetType() == typeof(CustomerStateChanged)).ShouldBe(1);
         }
 
         [Fact]
         public void Suspend_Should_Be_Change_State()
         {
             //Act
+            customer.ClearEvents();
             customer.Suspend();
 
             //Assert
             customer.State.ShouldBe(CustomerState.Suspended);
+            customer.Events.Count(x => x.GetType() == typeof(CustomerStateChanged)).ShouldBe(1);
         }
 
         [Fact]
         public void Lock_Should_Be_Change_State()
         {
             //Act
+            customer.ClearEvents();
             customer.Lock();
 
             //Assert
             customer.State.ShouldBe(CustomerState.Locked);
+            customer.Events.Count(x => x.GetType() == typeof(CustomerStateChanged)).ShouldBe(1);
         }
 
         [Fact]
         public void SoftDelete_Should_Be_Change_State()
         {
             //Act
+            customer.ClearEvents();
             customer.SoftDelete();
 
             //Assert
             customer.State.ShouldBe(CustomerState.Deleted);
+            customer.Events.Count(x => x.GetType() == typeof(CustomerStateChanged)).ShouldBe(1);
+        }
+
+        [Fact]
+        public void Same_State_Should_Not_Trigger_Event()
+        {
+            //Act
+            customer.ClearEvents();
+            customer.SoftDelete();
+            customer.SoftDelete();
+
+            //Assert
+            customer.State.ShouldBe(CustomerState.Deleted);
+            customer.Events.Count().ShouldBe(1);
         }
     }
 }

@@ -45,6 +45,17 @@
         }
 
         [Fact]
+        public void Given_Empty_Id_Constructor_Two_Should_Throw_Exception()
+        {
+            // Act
+            Exception exception = Record.Exception(() => new Customer(Guid.Empty, details, account, address, 0, CustomerState.Incomplete, createOn, lastUpdate));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidCustomerIdException>();
+        }
+
+        [Fact]
         public void Given_Null_Customer_Details_Constructor_Two_Should_Throw_Exception()
         {
             // Act
@@ -78,7 +89,7 @@
         }
 
         [Fact]
-        public void Given_negative_Customer_Version_Constructor_Two_Should_Throw_Exception()
+        public void Given_Negative_Customer_Version_Constructor_Two_Should_Throw_Exception()
         {
             // Act
             Exception exception = Record.Exception(() => new Customer(id, details, account, address, -1, CustomerState.Incomplete, createOn, lastUpdate));
@@ -86,6 +97,7 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerException>();
+            ((InvalidCustomerException)exception).Name.ShouldBe("Version");
         }
     }
 }

@@ -66,15 +66,12 @@
         /// <returns></returns>
         public override bool IsValid()
         {
-            bool isValid = true;
-            isValid = isValid && !string.IsNullOrEmpty(this.FirstName);
-            isValid = isValid && !string.IsNullOrWhiteSpace(this.FirstName);
-            isValid = isValid && !string.IsNullOrEmpty(this.LastName);
-            isValid = isValid && !string.IsNullOrWhiteSpace(this.LastName);
-            isValid = isValid && !string.IsNullOrEmpty(this.Email);
-            isValid = isValid && !string.IsNullOrWhiteSpace(this.Email);
-
-            return isValid;
+            return !string.IsNullOrEmpty(this.FirstName)
+                && !string.IsNullOrWhiteSpace(this.FirstName)
+                && !string.IsNullOrEmpty(this.LastName)
+                && !string.IsNullOrWhiteSpace(this.LastName)
+                && !string.IsNullOrEmpty(this.Email)
+                && !string.IsNullOrWhiteSpace(this.Email);
         }
 
         /// <summary>

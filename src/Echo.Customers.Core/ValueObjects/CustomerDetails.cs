@@ -58,14 +58,11 @@
         /// </summary>
         public override bool IsValid()
         {
-            bool isValid = true;
-            isValid = isValid && !string.IsNullOrEmpty(this.Name);
-            isValid = isValid && !string.IsNullOrWhiteSpace(this.Name);
-            isValid = isValid && !string.IsNullOrEmpty(this.Tenant);
-            isValid = isValid && !string.IsNullOrWhiteSpace(this.Tenant);
-            isValid = isValid && !this.Tenant.Equals(Guid.Empty);
-
-            return isValid;
+            return !string.IsNullOrEmpty(this.Name)
+                && !string.IsNullOrWhiteSpace(this.Name)
+                && !string.IsNullOrEmpty(this.Tenant)
+                && !string.IsNullOrWhiteSpace(this.Tenant)
+                && !this.Tenant.Equals(Guid.Empty);
         }
 
         /// <summary>

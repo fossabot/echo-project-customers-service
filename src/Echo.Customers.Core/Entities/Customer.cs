@@ -133,10 +133,12 @@
             {
                 throw new InvalidCustomerDetailsException("validation failed");
             }
-
-            CustomerDetails previous = this.Details;
-            this.Details = details;
-            this.AddEvent(new CustomerDetailsChanged(this, previous));
+            else if (this.Details != details)
+            {
+                CustomerDetails previous = this.Details;
+                this.Details = details;
+                this.AddEvent(new CustomerDetailsChanged(this, previous));
+            }
         }
 
         public void UpdateCustomerAccount(CustomerAccount account)
@@ -149,10 +151,12 @@
             {
                 throw new InvalidCustomerAccountException("validation failed");
             }
-
-            CustomerAccount previous = this.Account;
-            this.Account = account;
-            this.AddEvent(new CustomerAccountChanged(this, previous));
+            else if (this.Account != account)
+            {
+                CustomerAccount previous = this.Account;
+                this.Account = account;
+                this.AddEvent(new CustomerAccountChanged(this, previous));
+            }
         }
 
         public void UpdateCustomerAddress(CustomerAddress address)
@@ -165,10 +169,12 @@
             {
                 throw new InvalidCustomerAddressException("validation failed");
             }
-
-            CustomerAddress previous = this.Address;
-            this.Address = address;
-            this.AddEvent(new CustomerAddressChanged(this, previous));
+            else if (this.Address != address)
+            {
+                CustomerAddress previous = this.Address;
+                this.Address = address;
+                this.AddEvent(new CustomerAddressChanged(this, previous));
+            }
         }
 
         /// <summary>
@@ -238,9 +244,12 @@
         /// <param name="state">The state.</param>
         private void SetState(CustomerState state)
         {
-            var previousState = State;
-            this.State = state;
-            AddEvent(new CustomerStateChanged(this, previousState));
+            if (this.State != state)
+            {
+                var previousState = State;
+                this.State = state;
+                AddEvent(new CustomerStateChanged(this, previousState));
+            }
         }
     }
 }
