@@ -1,6 +1,7 @@
 ﻿namespace Echo.Customers.Tests.UnitTests.Core.Entities
 {
     using Echo.Customers.Core.Entities;
+    using Echo.Customers.Core.Enums;
 
     using Shouldly;
 
@@ -12,10 +13,11 @@
         public void Givven_Customer_Equals_Should_Return_True()
         {
             //Arrange
-            Customer customer1 = Customer.Create(id, details, address);
+            Customer customer1 = new Customer(id, details, account, address, 0, CustomerState.Incomplete, createOn, lastUpdate);
+            Customer customer2 = new Customer(id, details, account, address, 0, CustomerState.Incomplete, createOn, lastUpdate);
 
             //Act
-            bool isEqual = customer.Equals(customer1);
+            bool isEqual = customer1.Equals(customer2);
 
             //Assert
             isEqual.ShouldBeTrue();

@@ -19,6 +19,11 @@
         private CustomerDetails _details;
 
         /// <summary>
+        /// The customer account
+        /// </summary>
+        private CustomerAccount _account;
+
+        /// <summary>
         /// The customer addresses
         /// </summary>
         private CustomerAddress _address;
@@ -30,6 +35,15 @@
         {
             get => _details;
             private set => _details = value;
+        }
+
+        /// <summary>
+        /// Gets the customer details.
+        /// </summary>
+        public CustomerAccount Account
+        {
+            get => _account;
+            private set => _account = value;
         }
 
         /// <summary>
@@ -49,12 +63,8 @@
         public Customer(Guid id, string name)
             : base(id)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new InvalidCustomerDetailsException("Name");
-            }
-
             this.Details = new CustomerDetails(name);
+            this.Account = new CustomerAccount();
             this.Address = new CustomerAddress();
         }
 
@@ -65,10 +75,11 @@
         /// <param name="version">The version.</param>
         /// <param name="createOn"></param>
         /// <param name="lastUpdate"></param>
-        public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress, int version, CustomerState state, DateTime createOn, DateTime lastUpdate)
+        public Customer(Guid id, CustomerDetails details, CustomerAccount account, CustomerAddress customerAddress, int version, CustomerState state, DateTime createOn, DateTime lastUpdate)
             : base(id, version, state, createOn, lastUpdate)
         {
             this.Details = details ?? throw new MissingCustomerDetailsException();
+            this.Account = account ?? throw new MissingCustomerAccountException();
             this.Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
@@ -112,16 +123,52 @@
             AddEvent(new CustomerDeleted(this));
         }
 
-        public void UpdateCusomerDetails(CustomerDetails details)
+        public void UpdateCustomerDetails(CustomerDetails details)
         {
             if (details is null)
             {
                 throw new MissingCustomerDetailsException();
             }
-            if (!details.IsValid())
+            else if (!details.IsValid())
             {
                 throw new InvalidCustomerDetailsException("validation failed");
             }
+
+            CustomerDetails previous = this.Details;
+            this.Details = details;
+            this.AddEvent(new CustomerDetailsChanged(this, previous));
+        }
+
+        public void UpdateCustomerAccount(CustomerAccount account)
+        {
+            if (account is null)
+            {
+                throw new MissingCustomerAccountException();
+            }
+            else if (!account.IsValid())
+            {
+                throw new InvalidCustomerAccountException("validation failed");
+            }
+
+            CustomerAccount previous = this.Account;
+            this.Account = account;
+            this.AddEvent(new CustomerAccountChanged(this, previous));
+        }
+
+        public void UpdateCustomerAddress(CustomerAddress address)
+        {
+            if (address is null)
+            {
+                throw new MissingCustomerAddressException();
+            }
+            else if (!address.IsValid())
+            {
+                throw new InvalidCustomerAddressException("validation failed");
+            }
+
+            CustomerAddress previous = this.Address;
+            this.Address = address;
+            this.AddEvent(new CustomerAddressChanged(this, previous));
         }
 
         /// <summary>
@@ -132,6 +179,7 @@
             yield return this.Id;
             yield return this.Details;
             yield return this.Address;
+            yield return this.Account;
         }
 
         /// <summary>

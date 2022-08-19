@@ -67,12 +67,12 @@
         public override bool IsValid()
         {
             bool isValid = true;
-            isValid = isValid && string.IsNullOrEmpty(this.FirstName);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.FirstName);
-            isValid = isValid && string.IsNullOrEmpty(this.LastName);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.LastName);
-            isValid = isValid && string.IsNullOrEmpty(this.Email);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.Email);
+            isValid = isValid && !string.IsNullOrEmpty(this.FirstName);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.FirstName);
+            isValid = isValid && !string.IsNullOrEmpty(this.LastName);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.LastName);
+            isValid = isValid && !string.IsNullOrEmpty(this.Email);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.Email);
 
             return isValid;
         }

@@ -2,6 +2,7 @@
 {
     using Echo.Customers.Core.Contracts;
     using Echo.Customers.Core.Enums;
+    using Echo.Customers.Core.Exceptions;
 
     /// <summary>
     /// Customer Base class
@@ -52,6 +53,11 @@
         /// <param name="id">The identifier.</param>
         protected CustomerBase(Guid id)
         {
+            if (id.Equals(Guid.Empty))
+            {
+                throw new InvalidCustomerIdException(id);
+            }
+
             this.Id = id;
             this.Version = 0;
             this.State = CustomerState.Incomplete;
@@ -68,9 +74,14 @@
         /// <param name="lastUpdate">The last update.</param>
         protected CustomerBase(Guid id, int version, CustomerState state, DateTime createOn, DateTime lastUpdate)
         {
+            if (id.Equals(Guid.Empty))
+            {
+                throw new InvalidCustomerIdException(id);
+            }
+
             this.Id = id;
-            this.Version = version;
-            this.State = state;
+            this.Version = version < 0 ? throw new InvalidCustomerException(nameof(this.Version)) : version;
+            this.State = state == CustomerState.Unknown ? throw new InvalidCustomerException(nameof(this.State)) : state;
             this.CreateOn = createOn;
             this.LastUpdate = lastUpdate;
         }

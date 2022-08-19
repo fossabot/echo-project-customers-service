@@ -59,11 +59,11 @@
         public override bool IsValid()
         {
             bool isValid = true;
-            isValid = isValid && string.IsNullOrEmpty(this.Name);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.Name);
-            isValid = isValid && string.IsNullOrEmpty(this.Tenant);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.Tenant);
-            isValid = isValid && this.Tenant.Equals(Guid.Empty);
+            isValid = isValid && !string.IsNullOrEmpty(this.Name);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.Name);
+            isValid = isValid && !string.IsNullOrEmpty(this.Tenant);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.Tenant);
+            isValid = isValid && !this.Tenant.Equals(Guid.Empty);
 
             return isValid;
         }

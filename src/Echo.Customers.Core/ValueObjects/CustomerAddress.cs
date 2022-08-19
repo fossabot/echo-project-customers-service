@@ -57,13 +57,13 @@
         public override bool IsValid()
         {
             bool isValid = true;
-            isValid = isValid && string.IsNullOrEmpty(this.Country);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.Country);
-            isValid = isValid && string.IsNullOrEmpty(this.City);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.City);
+            isValid = isValid && !string.IsNullOrEmpty(this.Country);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.Country);
+            isValid = isValid && !string.IsNullOrEmpty(this.City);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.City);
             isValid = isValid && this.PostCode > 0;
-            isValid = isValid && string.IsNullOrEmpty(this.Address);
-            isValid = isValid && string.IsNullOrWhiteSpace(this.Address);
+            isValid = isValid && !string.IsNullOrEmpty(this.Address);
+            isValid = isValid && !string.IsNullOrWhiteSpace(this.Address);
 
             return isValid;
         }

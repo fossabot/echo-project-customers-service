@@ -44,9 +44,6 @@
         [Fact]
         public void Given_Empty_ID_Create_Should_Throw_An_Exception()
         {
-            //Arrange 
-            string name = "Name";
-
             // Act
             Exception exception = Record.Exception(() => Customer.Create(Guid.Empty, name));
 
@@ -64,7 +61,7 @@
 
             // Assert
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<MissingCustomerDetailsException>();
+            exception.ShouldBeOfType<InvalidCustomerDetailsException>();
         }
     }
 }

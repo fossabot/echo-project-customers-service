@@ -18,16 +18,13 @@
 
             // Assert
             customer.ShouldNotBeNull();
-            customer.Id.ShouldBe(id);
-            customer.Version.ShouldBe(0);
-            customer.Address.Equals(address).ShouldBeTrue();
         }
 
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created_Constructor_Two()
         {
             // Act
-            Customer customer = new Customer(id, details, address, 100, CustomerState.Unknown, createOn, lastUpdate);
+            Customer customer = new Customer(id, details, account, address, 100, CustomerState.Incomplete, createOn, lastUpdate);
 
             // Assert
             customer.ShouldNotBeNull();
@@ -44,14 +41,14 @@
 
             // Assert
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<MissingCustomerDetailsException>();
+            exception.ShouldBeOfType<InvalidCustomerDetailsException>();
         }
 
         [Fact]
         public void Given_Null_Customer_Details_Constructor_Two_Should_Throw_Exception()
         {
             // Act
-            Exception exception = Record.Exception(() => new Customer(id, null, address, 0, CustomerState.Unknown, createOn, lastUpdate));
+            Exception exception = Record.Exception(() => new Customer(id, null, account, address, 0, CustomerState.Incomplete, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -59,10 +56,21 @@
         }
 
         [Fact]
+        public void Given_Null_Customer_Account_Constructor_Two_Should_Throw_Exception()
+        {
+            // Act
+            Exception exception = Record.Exception(() => new Customer(id, details, null, address, 0, CustomerState.Incomplete, createOn, lastUpdate));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<MissingCustomerAccountException>();
+        }
+
+        [Fact]
         public void Given_Null_Customer_Address_Constructor_Two_Should_Throw_Exception()
         {
             // Act
-            Exception exception = Record.Exception(() => new Customer(id, details, null, 0, CustomerState.Unknown, createOn, lastUpdate));
+            Exception exception = Record.Exception(() => new Customer(id, details, account, null, 0, CustomerState.Incomplete, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -73,11 +81,11 @@
         public void Given_negative_Customer_Version_Constructor_Two_Should_Throw_Exception()
         {
             // Act
-            Exception exception = Record.Exception(() => new Customer(id, details, address, -1, CustomerState.Unknown, createOn, lastUpdate));
+            Exception exception = Record.Exception(() => new Customer(id, details, account, address, -1, CustomerState.Incomplete, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<MissingCustomerAddressException>();
+            exception.ShouldBeOfType<InvalidCustomerException>();
         }
     }
 }
