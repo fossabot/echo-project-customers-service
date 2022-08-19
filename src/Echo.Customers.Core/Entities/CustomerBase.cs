@@ -54,7 +54,7 @@
         {
             this.Id = id;
             this.Version = 0;
-            this.State = CustomerState.Inclomplate;
+            this.State = CustomerState.Incomplete;
             this.CreateOn = DateTime.UtcNow;
             this.LastUpdate = DateTime.UtcNow;
         }

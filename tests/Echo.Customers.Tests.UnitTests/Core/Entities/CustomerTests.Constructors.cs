@@ -11,7 +11,7 @@
     public partial class CustomerTests
     {
         [Fact]
-        public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_One()
+        public void Given_Valid_Values_Customer_Should_Be_Created_Constructor_One()
         {
             // Act
             Customer customer = new Customer(id, details, address);
@@ -24,7 +24,7 @@
         }
 
         [Fact]
-        public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_Two()
+        public void Given_Valid_Values_Customer_Should_Be_Created_Constructor_Two()
         {
             Customer customer = new Customer(id, details, address, 100, CustomerState.Unknown, createOn, lastUpdate);
 

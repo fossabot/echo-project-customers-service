@@ -49,8 +49,8 @@
         public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress)
             : base(id)
         {
-            Details = details ?? throw new MissingCustomerDetailsException();
-            Address = customerAddress ?? throw new MissingCustomerAddressException();
+            this.Details = details ?? throw new MissingCustomerDetailsException();
+            this.Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
         /// <summary>Initializes a new instance of the <see cref="Customer" /> class.</summary>
@@ -63,8 +63,8 @@
         public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress, int version, CustomerState state, DateTime createOn, DateTime lastUpdate)
             : base(id, version, state, createOn, lastUpdate)
         {
-            Details = details ?? throw new MissingCustomerDetailsException();
-            Address = customerAddress ?? throw new MissingCustomerAddressException();
+            this.Details = details ?? throw new MissingCustomerDetailsException();
+            this.Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
         public static Customer Create(Guid id, CustomerDetails details, CustomerAddress customerAddress)
@@ -73,6 +73,31 @@
             customer.AddEvent(new CustomerCreated(customer));
             return customer;
         }
+
+        /// <summary>
+        /// Set Customer as Incomplete
+        /// </summary>
+        public void SetIncomplete() => SetState(CustomerState.Incomplete);
+
+        /// <summary>
+        /// Activate Customer
+        /// </summary>
+        public void Activate() => SetState(CustomerState.Active);
+
+        /// <summary>
+        /// Suspend Customer
+        /// </summary>
+        public void Suspend() => SetState(CustomerState.Suspended);
+
+        /// <summary>
+        /// Lock Customer
+        /// </summary>
+        public void Lock() => SetState(CustomerState.Locked);
+
+        /// <summary>
+        /// Set Customer as Deleted
+        /// </summary>
+        public void SoftDelete() => SetState(CustomerState.Deleted);
 
         /// <summary>
         /// Deletes this instance.
@@ -87,9 +112,9 @@
         /// </summary>
         public IEnumerable<object> GetEqualityComponents()
         {
-            yield return Id;
-            yield return Details;
-            yield return Address;
+            yield return this.Id;
+            yield return this.Details;
+            yield return this.Address;
         }
 
         /// <summary>
@@ -141,5 +166,16 @@
             => GetEqualityComponents()
                 .Select(x => x != null ? x.GetHashCode() : 0)
                 .Aggregate((x, y) => x ^ y);
+
+        /// <summary>
+        /// Sets the state.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        private void SetState(CustomerState state)
+        {
+            var previousState = State;
+            this.State = state;
+            AddEvent(new CustomerStateChanged(this, previousState));
+        }
     }
 }

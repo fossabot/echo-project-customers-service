@@ -1,6 +1,7 @@
 ﻿namespace Echo.Customers.Tests.UnitTests.Core.Entities
 {
     using Echo.Customers.Core.Entities;
+    using Echo.Customers.Core.Enums;
     using Echo.Customers.Core.ValueObjects;
 
     using Shouldly;
@@ -25,6 +26,56 @@
 
             //Assert
             hash.ShouldNotBe(0);
+        }
+
+        [Fact]
+        public void SetIncomplete_Should_Be_Change_State()
+        {
+            //Act
+            customer.SetIncomplete();
+
+            //Assert
+            customer.State.ShouldBe(CustomerState.Incomplete);
+        }
+
+        [Fact]
+        public void Activate_Should_Be_Change_State()
+        {
+            //Act
+            customer.Activate();
+
+            //Assert
+            customer.State.ShouldBe(CustomerState.Active);
+        }
+
+        [Fact]
+        public void Suspend_Should_Be_Change_State()
+        {
+            //Act
+            customer.Suspend();
+
+            //Assert
+            customer.State.ShouldBe(CustomerState.Suspended);
+        }
+
+        [Fact]
+        public void Lock_Should_Be_Change_State()
+        {
+            //Act
+            customer.Lock();
+
+            //Assert
+            customer.State.ShouldBe(CustomerState.Locked);
+        }
+
+        [Fact]
+        public void SoftDelete_Should_Be_Change_State()
+        {
+            //Act
+            customer.SoftDelete();
+
+            //Assert
+            customer.State.ShouldBe(CustomerState.Deleted);
         }
     }
 }

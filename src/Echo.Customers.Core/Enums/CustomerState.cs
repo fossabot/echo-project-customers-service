@@ -6,9 +6,10 @@
     public enum CustomerState
     {
         Unknown = 0,
-        Inclomplate = 1,
+        Incomplete = 1,
         Active = 2,
         Suspended = 3,
-        Deleted = 4,
+        Locked = 4,
+        Deleted = 5,
     }
 }

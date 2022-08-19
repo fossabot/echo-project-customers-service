@@ -25,7 +25,7 @@
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(1);
-            customer.State.ShouldBe(CustomerState.Inclomplate);
+            customer.State.ShouldBe(CustomerState.Incomplete);
             customer.Details.Equals(details).ShouldBeTrue();
             customer.Address.Equals(address).ShouldBeTrue();
             customer.Events.Count().ShouldBe(1);
