@@ -5,7 +5,7 @@
     using Echo.Customers.Core.Exceptions;
 
     /// <summary>
-    /// Customer Info Value Object
+    /// Customer Address Value Object
     /// </summary>
     /// <seealso cref="ValueObject" />
     public class CustomerAddress : ValueObject
@@ -33,6 +33,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerAddress"/> class.
         /// </summary>
+        public CustomerAddress() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomerAddress"/> class.
+        /// </summary>
         /// <param name="country">The country.</param>
         /// <param name="city">The city.</param>
         /// <param name="postCode">The post code.</param>
@@ -47,15 +52,20 @@
         }
 
         /// <summary>
-        /// Gets the equality components.
+        /// Returns true if Customer Details is valid.
         /// </summary>
-        /// <returns></returns>
-        protected override IEnumerable<object> GetEqualityComponents()
+        public override bool IsValid()
         {
-            yield return Country;
-            yield return City;
-            yield return PostCode;
-            yield return Address;
+            bool isValid = true;
+            isValid = isValid && string.IsNullOrEmpty(this.Country);
+            isValid = isValid && string.IsNullOrWhiteSpace(this.Country);
+            isValid = isValid && string.IsNullOrEmpty(this.City);
+            isValid = isValid && string.IsNullOrWhiteSpace(this.City);
+            isValid = isValid && this.PostCode > 0;
+            isValid = isValid && string.IsNullOrEmpty(this.Address);
+            isValid = isValid && string.IsNullOrWhiteSpace(this.Address);
+
+            return isValid;
         }
 
         /// <summary>
@@ -67,6 +77,18 @@
         public override string ToString()
         {
             return $"{Address}, {Country}, {PostCode} {City}";
+        }
+
+        /// <summary>
+        /// Gets the equality components.
+        /// </summary>
+        /// <returns></returns>
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Country;
+            yield return City;
+            yield return PostCode;
+            yield return Address;
         }
     }
 }

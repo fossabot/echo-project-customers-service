@@ -46,11 +46,16 @@
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddress">The customer address.</param>
-        public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress)
+        public Customer(Guid id, string name)
             : base(id)
         {
-            this.Details = details ?? throw new MissingCustomerDetailsException();
-            this.Address = customerAddress ?? throw new MissingCustomerAddressException();
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new InvalidCustomerDetailsException("Name");
+            }
+
+            this.Details = new CustomerDetails(name);
+            this.Address = new CustomerAddress();
         }
 
         /// <summary>Initializes a new instance of the <see cref="Customer" /> class.</summary>
@@ -67,9 +72,9 @@
             this.Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
-        public static Customer Create(Guid id, CustomerDetails details, CustomerAddress customerAddress)
+        public static Customer Create(Guid id, string name)
         {
-            var customer = new Customer(id, details, customerAddress);
+            var customer = new Customer(id, name);
             customer.AddEvent(new CustomerCreated(customer));
             return customer;
         }
@@ -105,6 +110,18 @@
         public void Delete()
         {
             AddEvent(new CustomerDeleted(this));
+        }
+
+        public void UpdateCusomerDetails(CustomerDetails details)
+        {
+            if (details is null)
+            {
+                throw new MissingCustomerDetailsException();
+            }
+            if (!details.IsValid())
+            {
+                throw new InvalidCustomerDetailsException("validation failed");
+            }
         }
 
         /// <summary>

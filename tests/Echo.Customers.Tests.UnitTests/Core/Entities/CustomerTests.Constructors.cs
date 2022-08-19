@@ -14,7 +14,7 @@
         public void Given_Valid_Values_Customer_Should_Be_Created_Constructor_One()
         {
             // Act
-            Customer customer = new Customer(id, details, address);
+            Customer customer = new Customer(id, "name");
 
             // Assert
             customer.ShouldNotBeNull();
@@ -26,6 +26,7 @@
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created_Constructor_Two()
         {
+            // Act
             Customer customer = new Customer(id, details, address, 100, CustomerState.Unknown, createOn, lastUpdate);
 
             // Assert
@@ -39,8 +40,7 @@
         public void Given_Null_Customer_Details_Constructor_One_Should_Throw_Exception()
         {
             // Act
-            // Act
-            Exception exception = Record.Exception(() => new Customer(id, null, address));
+            Exception exception = Record.Exception(() => new Customer(id, null));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -51,7 +51,6 @@
         public void Given_Null_Customer_Details_Constructor_Two_Should_Throw_Exception()
         {
             // Act
-            // Act
             Exception exception = Record.Exception(() => new Customer(id, null, address, 0, CustomerState.Unknown, createOn, lastUpdate));
 
             // Assert
@@ -60,11 +59,10 @@
         }
 
         [Fact]
-        public void Given_Null_Customer_Address_Constructor_One_Should_Throw_Exception()
+        public void Given_Null_Customer_Address_Constructor_Two_Should_Throw_Exception()
         {
             // Act
-            // Act
-            Exception exception = Record.Exception(() => new Customer(id, details, null));
+            Exception exception = Record.Exception(() => new Customer(id, details, null, 0, CustomerState.Unknown, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -72,11 +70,10 @@
         }
 
         [Fact]
-        public void Given_Null_Customer_Address_Constructor_Two_Should_Throw_Exception()
+        public void Given_negative_Customer_Version_Constructor_Two_Should_Throw_Exception()
         {
             // Act
-            // Act
-            Exception exception = Record.Exception(() => new Customer(id, details, null, 0, CustomerState.Unknown, createOn, lastUpdate));
+            Exception exception = Record.Exception(() => new Customer(id, details, address, -1, CustomerState.Unknown, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();
