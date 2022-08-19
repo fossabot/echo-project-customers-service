@@ -8,8 +8,9 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    ///InvalidCustomerException
+    /// InvalidCustomerException
     /// </summary>
+    [Serializable]
     public class InvalidCustomerException : DomainException
     {
         /// <summary>

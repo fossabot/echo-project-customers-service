@@ -42,6 +42,7 @@
             // Assert
             customerAccount.ShouldNotBeNull();
             customerAccount.Id.ShouldBe(id);
+            customerAccount.FullName.ShouldBe($"{firstName} {lastName}");
         }
 
         [Fact]

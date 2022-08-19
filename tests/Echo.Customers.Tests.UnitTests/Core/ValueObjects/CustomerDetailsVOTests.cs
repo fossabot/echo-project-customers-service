@@ -14,7 +14,6 @@
     {
         // Arrange
         private static readonly string name = "Name";
-        private static readonly string tenant = "Tenant";
 
 
         [Fact]
