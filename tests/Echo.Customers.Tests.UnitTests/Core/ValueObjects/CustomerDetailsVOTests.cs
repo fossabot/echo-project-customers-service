@@ -99,10 +99,10 @@
         public void Given_Object_Customer_Details_Equal_Should_Return_True()
         {
             // Act
-            CustomerDetails CustomerDetails = new CustomerDetails(name, tenant);
+            CustomerDetails customerDetails = new CustomerDetails(name, tenant);
 
             // Assert
-            CustomerDetails.Equals((object)CustomerDetails).ShouldBeTrue();
+            customerDetails.Equals((object)customerDetails).ShouldBeTrue();
         }
 
         [Fact]

@@ -136,8 +136,6 @@
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
         /// </returns>
         public override int GetHashCode()
-            => GetEqualityComponents()
-                .Select(x => x != null ? x.GetHashCode() : 0)
-                .Aggregate((x, y) => x ^ y);
+            => GetEqualityComponents().Select(x => x != null ? x.GetHashCode() : 0).Aggregate((x, y) => x ^ y);
     }
 }

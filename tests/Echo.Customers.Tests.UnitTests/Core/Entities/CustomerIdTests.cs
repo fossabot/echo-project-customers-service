@@ -1,17 +1,10 @@
 ﻿namespace Echo.Customers.Tests.UnitTests.Core.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Metrics;
-    using System.Linq;
-    using System.Net;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using Echo.Customers.Core.Entities;
-    using Echo.Customers.Core.ValueObjects;
 
     using Shouldly;
+
+    using System;
 
     using Xunit;
 
