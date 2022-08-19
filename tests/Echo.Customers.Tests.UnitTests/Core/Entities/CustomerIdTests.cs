@@ -17,6 +17,9 @@
 
     public class CustomerIdTests
     {
+        // Arrange
+        private static Guid id = Guid.NewGuid();
+
         [Fact]
         public void Empty_Constructor_Valid_CustomerId_Should_Be_Created()
         {
@@ -30,8 +33,6 @@
         [Fact]
         public void Constructor_CustomerId_Should_Be_Created()
         {
-            //Arrange 
-            Guid id = Guid.NewGuid();
 
             //Act
             CustomerId customerId = new CustomerId(id);
@@ -44,22 +45,18 @@
         [Fact]
         public void Hash_CustomerId_Should_Be_Created()
         {
-            //Arrange 
-            Guid id = Guid.NewGuid();
-
             //Act
             CustomerId customerId = new CustomerId(id);
+            int hash = customerId.GetHashCode();
 
             //Assert
-            customerId.GetHashCode().ShouldBe(id.GetHashCode());
+            hash.ShouldNotBe(0);
+            hash.ShouldBe(id.GetHashCode());
         }
 
         [Fact]
         public void To_String_CustomerId_Should_Be_True()
         {
-            //Arrange 
-            Guid id = Guid.NewGuid();
-
             //Act
             CustomerId customerId = new CustomerId(id);
 
@@ -74,7 +71,7 @@
             CustomerId customerId = new CustomerId();
 
             //Assert
-            customerId.Value.Equals(customerId).ShouldBeTrue();
+            customerId.Equals(customerId).ShouldBeTrue();
         }
 
         [Fact]
@@ -84,7 +81,7 @@
             CustomerId customerId = new CustomerId();
 
             //Assert
-            customerId.Value.Equals(new { }).ShouldBeFalse();
+            customerId.Equals(new { }).ShouldBeFalse();
         }
 
 
@@ -95,7 +92,7 @@
             CustomerId customerId = new CustomerId();
 
             //Assert
-            customerId.Value.Equals(null).ShouldBeFalse();
+            customerId.Equals((object)null).ShouldBeFalse();
         }
 
         [Fact]
@@ -121,9 +118,6 @@
         [Fact]
         public void Given_Customer_Id_Equal_Should_Return_True_Two()
         {
-            //Arrange 
-            Guid id = Guid.NewGuid();
-
             //Act
             CustomerId customerId = new CustomerId(id);
 

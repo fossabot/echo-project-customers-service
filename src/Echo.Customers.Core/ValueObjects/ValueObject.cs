@@ -49,8 +49,6 @@
             }
 
             return obj.GetType() == this.GetType() && this.Equals((ValueObject)obj);
-
-            
         }
 
         /// <summary>

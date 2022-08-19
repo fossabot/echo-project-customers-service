@@ -13,15 +13,15 @@
 
     public class DeleteCustomerTests
     {
+        // Arrange
+        private static readonly CustomerId id = new CustomerId();
+        private static readonly CustomerDetails details = new CustomerDetails("Name", "Tenant");
+        private static readonly CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
+        private static readonly Customer customer = Customer.Create(id, details, address);
+
         [Fact]
         public void Customer_Should_Be_Deleted()
         {
-            // Arrange
-            CustomerId id = new CustomerId();
-            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-
-            Customer customer = Customer.Create(id, address);
-
             // Act
             customer.Delete();
 
@@ -34,27 +34,6 @@
             @event.ShouldBeOfType<CustomerDeleted>();
             ((CustomerDeleted)@event).Customer.ShouldNotBeNull();
             ((CustomerDeleted)@event).Customer.Equals(customer).ShouldBeTrue();
-        }
-
-        [Fact]
-        public void Events_Should_Be_Deleted()
-        {
-            // Arrange
-            CustomerId id = new CustomerId();
-            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-
-
-            Customer customer = Customer.Create(id, address);
-
-            // Act
-            customer.Delete();
-
-            // Assert
-            customer.ShouldNotBeNull();
-            customer.Id.ShouldBe(id);
-            customer.Events.Count().ShouldBe(2);
-            customer.ClearEvents();
-            customer.Events.Count().ShouldBe(0);
         }
     }
 }

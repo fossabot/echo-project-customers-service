@@ -30,6 +30,10 @@
 
             // Assert
             customerAddress.ShouldNotBeNull();
+            customerAddress.Country.ShouldBe(country);
+            customerAddress.City.ShouldBe(city);
+            customerAddress.PostCode.ShouldBe(postCode);
+            customerAddress.Address.ShouldBe(address);
         }
 
         [Fact]
@@ -42,6 +46,8 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerAddressException>();
+            ((InvalidCustomerAddressException)exception).Name.ShouldBe("Country");
+            ((InvalidCustomerAddressException)exception).Code.ShouldBe("invalid_customer_address");
         }
 
         [Fact]
@@ -53,6 +59,8 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerAddressException>();
+            ((InvalidCustomerAddressException)exception).Name.ShouldBe("City");
+            ((InvalidCustomerAddressException)exception).Code.ShouldBe("invalid_customer_address");
         }
 
         [Fact]
@@ -64,6 +72,8 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerAddressException>();
+            ((InvalidCustomerAddressException)exception).Name.ShouldBe("PostCode");
+            ((InvalidCustomerAddressException)exception).Code.ShouldBe("invalid_customer_address");
         }
 
         [Fact]
@@ -75,6 +85,8 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerAddressException>();
+            ((InvalidCustomerAddressException)exception).Name.ShouldBe("Address");
+            ((InvalidCustomerAddressException)exception).Code.ShouldBe("invalid_customer_address");
         }
 
         [Fact]

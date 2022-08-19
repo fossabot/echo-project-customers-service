@@ -14,20 +14,22 @@
 
     public class CreateCustomerTests
     {
+        // Arrange
+        private static readonly CustomerId id = new CustomerId();
+        private static readonly CustomerDetails details = new CustomerDetails("Name", "Tenant");
+        private static readonly CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
+
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created_Static_Factory()
         {
-            // Arrange
-            CustomerId id = new CustomerId();
-            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-
             // Act
-            Customer customer = Customer.Create(id, address);
+            Customer customer = Customer.Create(id, details, address);
 
             // Assert
             customer.ShouldNotBeNull();
             customer.Id.ShouldBe(id);
             customer.Version.ShouldBe(1);
+            customer.Details.Equals(details).ShouldBeTrue();
             customer.Address.Equals(address).ShouldBeTrue();
             customer.Events.Count().ShouldBe(1);
 
@@ -40,12 +42,8 @@
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_One()
         {
-            // Arrange
-            CustomerId id = new CustomerId();
-            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-
             // Act
-            Customer customer = new Customer(id, address);
+            Customer customer = new Customer(id, details, address);
 
             // Assert
             customer.ShouldNotBeNull();
@@ -57,12 +55,7 @@
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_Two()
         {
-            // Arrange
-            CustomerId id = new CustomerId();
-            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-
-            // Act
-            Customer customer = new Customer(id, address, 100);
+            Customer customer = new Customer(id, details, address, 100);
 
             // Assert
             customer.ShouldNotBeNull();
@@ -74,11 +67,8 @@
         [Fact]
         public void Given_Empty_Customer_Should_Throw_An_Exception()
         {
-            // Arrange
-            CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
-
             // Act
-            Exception exception = Record.Exception(() => Customer.Create(Guid.Empty, address));
+            Exception exception = Record.Exception(() => Customer.Create(Guid.Empty, details, address));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -86,13 +76,21 @@
         }
 
         [Fact]
+        public void Given_Null_Customer_Details_Should_Throw_An_Exception()
+        {
+            // Act
+            Exception exception = Record.Exception(() => Customer.Create(id, null, address));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<MissingCustomerDetailsException>();
+        }
+
+        [Fact]
         public void Given_Null_Customer_Address_List_Should_Throw_An_Exception()
         {
-            // Arrange
-            CustomerId id = new CustomerId();
-
             // Act
-            Exception exception = Record.Exception(() => Customer.Create(id, null));
+            Exception exception = Record.Exception(() => Customer.Create(id, details, null));
 
             // Assert
             exception.ShouldNotBeNull();

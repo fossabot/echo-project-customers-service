@@ -4,16 +4,16 @@
     using System.Runtime.Serialization;
 
     [Serializable]
-    public class MissingCustomerAddressException : DomainException
+    public class MissingCustomerDetailsException : DomainException
     {
         public override string Code { get; }
 
-        public MissingCustomerAddressException() : base($"Missing Customer Address")
-            => Code = "missing_customer_address";
+        public MissingCustomerDetailsException() : base($"Missing Customer Address")
+            => Code = "missing_customer_details";
 
-        protected MissingCustomerAddressException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected MissingCustomerDetailsException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            Code = info.GetString("Code") ?? "missing_customer_address";
+            Code = info.GetString("Code") ?? "missing_customer_details";
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

@@ -9,15 +9,15 @@
 
         public string Name { get; }
 
-        public InvalidCustomerAddressException() : base($"Invalid Customer Address in the List") 
-            => (Code, Name) = ("invalid_customer_info", string.Empty);
+        public InvalidCustomerAddressException() : base($"Invalid Customer Address")
+            => (Code, Name) = ("invalid_customer_address", string.Empty);
 
-        public InvalidCustomerAddressException(string name) : base($"Invalid Customer Address for {name}")
-            => (Code, Name) = ("invalid_customer_info", name);
+        public InvalidCustomerAddressException(string name) : base($"Invalid Customer Address value for {name}")
+            => (Code, Name) = ("invalid_customer_address", name);
 
         protected InvalidCustomerAddressException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            Code = info.GetString(nameof(Code)) ?? "invalid_customer_info";
+            Code = info.GetString(nameof(Code)) ?? "invalid_customer_address";
             Name = info.GetString(nameof(Name)) ?? "missing_prop_name";
         }
 
