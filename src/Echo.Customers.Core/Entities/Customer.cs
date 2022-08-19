@@ -31,11 +31,10 @@
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddresses">The customer address.</param>
-        public Customer(Guid id, CustomerAddress customerAddress)
+        public Customer(Guid id, CustomerAddress? customerAddress)
             : base(id, 0)
         {
-            ValidateAdresses(customerAddress);
-            Address = customerAddress;
+            Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
         /// <summary>
@@ -47,8 +46,7 @@
         public Customer(Guid id, CustomerAddress customerAddress, int version)
             : base(id, version)
         {
-            ValidateAdresses(customerAddress);
-            Address = customerAddress;
+            Address = customerAddress ?? throw new MissingCustomerAddressException();
         }
 
         public static Customer Create(Guid id, CustomerAddress customerAddress)
@@ -64,19 +62,6 @@
         public void Delete()
         {
             AddEvent(new CustomerDeleted(this));
-        }
-
-        /// <summary>
-        /// Validates the addresses.
-        /// </summary>
-        /// <param name="customerAddresses">The customer addresses.</param>
-        /// <exception cref="MissingCustomerAddressException"></exception>
-        private static void ValidateAdresses(CustomerAddress customerAddress)
-        {
-            if (customerAddress is null)
-            {
-                throw new MissingCustomerAddressException();
-            }
         }
     }
 }
