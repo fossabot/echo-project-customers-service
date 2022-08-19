@@ -1,16 +1,8 @@
 ﻿namespace Echo.Customers.Tests.UnitTests.Core.Entities
 {
     using Echo.Customers.Core.Entities;
-    using Echo.Customers.Core.Exceptions;
-    using Echo.Customers.Core.ValueObjects;
 
     using Shouldly;
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     using Xunit;
 

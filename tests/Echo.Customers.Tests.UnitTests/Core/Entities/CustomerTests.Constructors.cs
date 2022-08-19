@@ -25,7 +25,7 @@
         [Fact]
         public void Given_Valid_Values_Customer_Should_Be_Created_Contructor_Two()
         {
-            Customer customer = new Customer(id, details, address, 100);
+            Customer customer = new Customer(id, details, address, 100, createOn, lastUpdate);
 
             // Assert
             customer.ShouldNotBeNull();
@@ -51,7 +51,7 @@
         {
             // Act
             // Act
-            Exception exception = Record.Exception(() => new Customer(id, null, address, 0));
+            Exception exception = Record.Exception(() => new Customer(id, null, address, 0, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -75,7 +75,7 @@
         {
             // Act
             // Act
-            Exception exception = Record.Exception(() => new Customer(id, details, null, 0));
+            Exception exception = Record.Exception(() => new Customer(id, details, null, 0, createOn, lastUpdate));
 
             // Assert
             exception.ShouldNotBeNull();

@@ -9,8 +9,8 @@
     /// <summary>
     /// Customer Domain
     /// </summary>
-    /// <seealso cref="CustomerRoot" />
-    public class Customer : CustomerRoot, IEquatable<Customer>
+    /// <seealso cref="CustomerBase" />
+    public class Customer : CustomerBase, IEquatable<Customer>
     {
         /// <summary>
         /// The customer addresses
@@ -46,7 +46,7 @@
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddresses">The customer address.</param>
         public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress)
-            : base(id, 0)
+            : base(id)
         {
             Details = details ?? throw new MissingCustomerDetailsException();
             Address = customerAddress ?? throw new MissingCustomerAddressException();
@@ -58,11 +58,13 @@
         /// <param name="id">The identifier.</param>
         /// <param name="customerAddresses">The customer addresses.</param>
         /// <param name="version">The version.</param>
-        public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress, int version)
+        public Customer(Guid id, CustomerDetails details, CustomerAddress customerAddress, int version, DateTime createOn, DateTime lastUpdate)
             : base(id, version)
         {
             Details = details ?? throw new MissingCustomerDetailsException();
             Address = customerAddress ?? throw new MissingCustomerAddressException();
+            CreateOn = createOn;
+            LastUpdate = lastUpdate;
         }
 
         public static Customer Create(Guid id, CustomerDetails details, CustomerAddress customerAddress)

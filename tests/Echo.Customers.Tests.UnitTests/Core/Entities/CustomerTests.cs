@@ -13,6 +13,8 @@
         private static readonly CustomerId id = new CustomerId();
         private static readonly CustomerDetails details = new CustomerDetails("Name", "Tenant");
         private static readonly CustomerAddress address = new CustomerAddress("Country", "City", 12345, "address");
+        private static readonly DateTime createOn = DateTime.UtcNow;
+        private static readonly DateTime lastUpdate = DateTime.UtcNow;
         private static readonly Customer customer = Customer.Create(id, details, address);
 
         [Fact]
