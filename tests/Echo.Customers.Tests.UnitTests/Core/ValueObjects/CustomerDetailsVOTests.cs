@@ -39,7 +39,6 @@
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerDetailsException>();
             ((InvalidCustomerDetailsException)exception).Name.ShouldBe("Name");
-            ((InvalidCustomerDetailsException)exception).Code.ShouldBe("invalid_customer_details");
         }
 
         [Fact]
@@ -52,7 +51,6 @@
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerDetailsException>();
             ((InvalidCustomerDetailsException)exception).Name.ShouldBe("Tenant");
-            ((InvalidCustomerDetailsException)exception).Code.ShouldBe("invalid_customer_details");
         }
 
 

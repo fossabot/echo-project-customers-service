@@ -73,6 +73,7 @@
             // Assert
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCustomerIdException>();
+            ((InvalidCustomerIdException)exception).Id.ShouldBe(Guid.Empty);
         }
 
         [Fact]

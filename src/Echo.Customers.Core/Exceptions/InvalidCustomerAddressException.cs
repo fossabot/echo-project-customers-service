@@ -9,9 +9,6 @@
 
         public string Name { get; }
 
-        public InvalidCustomerAddressException() : base($"Invalid Customer Address")
-            => (Code, Name) = ("invalid_customer_address", string.Empty);
-
         public InvalidCustomerAddressException(string name) : base($"Invalid Customer Address value for {name}")
             => (Code, Name) = ("invalid_customer_address", name);
 
